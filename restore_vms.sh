@@ -15,7 +15,7 @@ echo " Selecione o arquivo de imagem a ser restaurado:"
 echo " "
 ls -clht | grep -v "bkp_metadados*"
 echo " "
-echo "Escolha VMs que deseja recuperar, na listagem acima.
+echo "Escolha VMs que deseja recuperar, na listagem acima."
 echo "Selecione com o mouse e depois copie, com botao direito."
 echo "Cole aqui em baixo:"
 read IMAGEM
