@@ -13,15 +13,15 @@ CLIENTE="nome_do_cliente"
 checardir(){
 if [ -e "/backup" ]
 then
-echo " o diretorio existe"
+echo " O diretorio existe" >> $LOG
 else
-echo " o diretorio não existe vamos criar o diretorio"
+echo " O diretorio nao existe, criando o diretorio." >> $LOG
 mkdir /backup
 fi
 }
 #
 montavolume(){
-echo "Listando todos discos do servidor."
+echo "Listando todos discos do servidor." >> $LOG
 echo " "
 ls -lh /dev/disk/by-uuid/* | sed "s/^.*\/dev\/.*\/by-uuid\/\(.*\) -> .*\/\([^\/]*\)/\/dev\/\2 -> \1/g"
 echo " "
