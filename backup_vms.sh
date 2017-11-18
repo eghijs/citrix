@@ -1,6 +1,7 @@
 #!/bin/bash
 ###########################################
 ##     Criado por: Rafael Ferreira  em 09/11/2011       ##
+##     Modificado por: Erik Pereira Ghijs em 18/11/2017       ##
 ###########################################
 #
 LOG=/var/log/backup_diario_xenserver.log
@@ -12,8 +13,8 @@ CLIENTE="nome_do_cliente"
 montavolume(){
 echo "Montando volume..." >> $LOG
 # Monta o ponto de montagem /backup
-umount /dev/sdb1
-mount /dev/sdb1 /backup
+# ls -l /dev/disk/by-uuid|grep sdc1 
+mount UUID="082fb0d5-a5db-41d1-ae04-6e9af3ba15f7" /backup
 montado=`mount | grep /backup`
 #
 # Se a montagem nao estiver OK, finaliza o processo e nao realiza o BKP
@@ -41,11 +42,11 @@ echo " " >> $LOG
 #remove backups antigos para liberar espaçno hd
 deletabackup(){
 #define o tempo para manter o arquivo de bakcup
-NMINUTOS="3240"
-# 3240 = 2 dias e 12 horas, tudo que tiver mais que esse tempo de vida seráemovido
+NDIAS="90"
+# 90 = 3 meses, tudo que tiver mais que esse tempo de vida seráemovido
 echo "Backups a serem removidos:" >> $LOG
-find $destino/* -mmin +$NMINUTOS >> $LOG
-find $destino/* -mmin +$NMINUTOS -exec rm -rf {} \;
+find $destino/* -mmin +$NDIAS >> $LOG
+find $destino/* -mmin +$NDIAS -exec rm -rf {} \;
 echo "Backups removidos com sucesso" >> $LOG
 }
 #
