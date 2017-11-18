@@ -10,11 +10,28 @@ echo " - Backup XenServer - " >> $LOG
 echo " - Backup diario -" >> $LOG
 CLIENTE="nome_do_cliente"
 #
+checardir(){
+if [ -e "/backup" ]
+then
+echo " o diretorio existe"
+else
+echo " o diretorio não existe vamos criar o diretorio"
+mkdir /backup
+fi
+}
+#
 montavolume(){
-echo "Montando volume..." >> $LOG
-# Monta o ponto de montagem /backup
-# ls -l /dev/disk/by-uuid|grep sdc1 
-mount UUID="082fb0d5-a5db-41d1-ae04-6e9af3ba15f7" /backup
+echo "Listando todos discos do servidor."
+echo " "
+ls -lh /dev/disk/by-uuid/* | sed "s/^.*\/dev\/.*\/by-uuid\/\(.*\) -> .*\/\([^\/]*\)/\/dev\/\2 -> \1/g"
+echo " "
+read LIST_UUID
+echo " "
+mount UUID="$LIST_UUID" /backup
+echo " "
+echo "Volume montando..." >> $LOG
+mount | grep /backup
+#
 montado=`mount | grep /backup`
 #
 # Se a montagem nao estiver OK, finaliza o processo e nao realiza o BKP
