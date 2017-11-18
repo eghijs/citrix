@@ -4,11 +4,16 @@
 ##     Modificado por: Erik Pereira Ghijs em 18/11/2017       ##
 ###########################################
 #
+C="\x1B[0;38;5;156m"
+F="\x1B[m"
+BARRA="##########################################################################################"
+BPROG(){N=$((N+6));sleep 0.25;printf "\e[2;f"$C"${BARRA:0:$N}"$F"\n";}
+#
 LOG=/var/log/backup_diario_xenserver.log
 rm -rf $LOG
 echo " - Backup XenServer - " >> $LOG
 echo " - Backup diario -" >> $LOG
-CLIENTE="nome_do_cliente"
+CLIENTE=`hostname`
 #
 checardir(){
 if [ -e "/backup" ]
@@ -76,6 +81,7 @@ backupmetadados(){
 cd $destino
 echo "Backupeando Metadados..." >> $LOG
 xe pool-dump-database file-name=bkp_metadados_$data
+BPROG
 echo "Backup Metadados concluido" >> $LOG
 }
 #
@@ -156,6 +162,7 @@ for uuid in ${vm_uuid_array[@]}; do
  # Exporta
  echo "Exportando VM..." >> $LOG
  snapshot_export=`xe vm-export vm=$snapshot filename="$destino$label-$data$arq_saida"`
+ BPROG
  echo "Exportado: $snapshot_export" >> $LOG
  # Apaga snapshot
  echo "Deletando Snapshot..." >> $LOG
@@ -183,7 +190,7 @@ ls -clht $destino >> $LOG
 enviaemail(){
 #Envia email
 echo " Enviando e-mail em `date +%d-%m-%y_%H:%M`" >> $LOG
-cat $LOG|mailx -s "Backup Diario XenServer $CLIENTE Finalizado" admredegyn@gmail.com
+cat $LOG|mailx -s "Backup Diario XenServer $CLIENTE Finalizado" eghijs@gmail.com
 }
 #
 desmontavolume(){
@@ -192,6 +199,8 @@ umount -f /backup
 }
 #
 #Chamada das Funcoes
+
+checardir
 montavolume
 dadosfull
 deletabackup
