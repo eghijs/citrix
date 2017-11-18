@@ -1,5 +1,8 @@
 #!/bin/bash
-# script de restore xenserver.
+###########################################
+##     Criado por: Rafael Ferreira  em 09/11/2011       ##
+##     Modificado por: Erik Pereira Ghijs em 18/11/2017       ##
+###########################################
 #
 DIR_BACKUP=/backup
 cd $DIR_BACKUP
@@ -12,6 +15,9 @@ echo " Selecione o arquivo de imagem a ser restaurado:"
 echo " "
 ls -clht | grep -v "bkp_metadados*"
 echo " "
+echo "Escolha VMs que deseja recuperar, na listagem acima.
+echo "Selecione com o mouse e depois copie, com botao direito."
+echo "Cole aqui em baixo:"
 read IMAGEM
 echo -n "O arquivo de imagem selecionado foi: $IMAGEM"
 echo " "
