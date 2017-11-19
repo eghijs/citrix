@@ -10,6 +10,7 @@ touch Start_vApps
 chmod a+x Start_vApps
 
 cat <<EOF > Start_vApps
+#!/bin/bash
 # AutoStart XenServer vApps with the tag autostart in their description
 # Script originally created by Raido Consultants - http://www.raido.be
 # Script updated and shared by E.Y. Barthel - http://www.virtues.it
@@ -41,4 +42,7 @@ do
     fi
 done
 EOF
-ln -s ../init.d/script_vApps S99vApps-xen
+
+ls -l /etc/rc5.d
+
+ln -s /etc/init.d/Start_vApps /etc/rc5.d/S$IDStart_vApps
