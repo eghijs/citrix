@@ -4,6 +4,15 @@
 # Data: 19/11/2017
 # Descricao: Este script tem a finalidade de ativar o auto-start das vm´s no Xenserver 7.2.
 #
+vm-uuid=$(xe vm-list power-state=running is-control-domain=false | grep uuid | cut -d: -f2- | tr -d \ )
+vapp-uuid=$(xe xe appliance-list | grep uuid | cut -d: -f2- | tr -d \ )
+
+# Create a vApp (and returns the UUID)
+xe appliance-create name-label=autostart name-description=Script de autostart para todas vm´s.
+echo "Criado arquivo autostart em vApp."
+# Add a VM to the vApp and set the Start order and Start delay settings for that VM
+xe vm-param-set uuid=$vm-uuid appliance=$vapp-uuid start-delay=25 order=1
+
 # Ativando power-on das vm´s.
 #
 for UUID in $(xe vm-list power-state=running is-control-domain=false | grep uuid | cut -d: -f2- | tr -d \ )
@@ -39,5 +48,5 @@ xe appliance-start uuid=$UUID
     EOF
     echo "Arquivo rc.local modificado."
     chmod +x /etc/rc.d/rc.local
-    echo "Trocado a permissao do rc.local para ser executado."
+    echo "Arquivo com permissao para executar."
 done
