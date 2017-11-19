@@ -5,6 +5,10 @@
 # Data: 19/11/2017
 # Descricao: Este script tem a finalidade de ativar o auto-start das vm´s no Xenserver 7.2.
 #
+# Parametros de configuração
+PATH=/sbin:/usr/sbin:$PATH
+
+
 
 cat <<EOF > /opt/autostartvapps.sh
 # AutoStart XenServer vApps with the tag autostart in their description
