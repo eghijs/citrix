@@ -43,45 +43,5 @@ do
 done
 EOF
 
-ls -l /etc/rc5.d
-
-ln -s /etc/init.d/Start_vApps /etc/rc5.d/S$IDStart_vApps
-------------------------------------------------------------------------------------------------------
-ls -clht | awk 'NR != 1{print "Restore: "$9" Tamanho: "$5}' | grep -v "bkp_metadados*"
-echo " "
-echo "Escolha VMs que deseja recuperar, na listagem acima."
-echo "Selecione com o mouse e depois copie, com botao direito."
-echo "Cole aqui em baixo:"
-read IMAGEM
-echo -n "O arquivo de imagem selecionado foi: $IMAGEM"
-echo " "
-echo -n "Continue? [Y/N]"
-read YN
-case "$YN" in
-Y)
-echo ""
-echo -n "Restaurando imagem..."
-xe vm-import filename="$IMAGEM" preserve=true
-BPROG
-;;
-y)
-echo ""
-echo -n "Restaurando imagem..."
-xe vm-import filename="$IMAGEM" preserve=true
-BPROG
-;;
-N)
-echo -n "Restauracao cancelada..."
-echo " "
-exit 1
-;;
-n)
-echo -n "Restauracao cancelada..."
-echo " "
-exit 1
-;;
-*)
-echo -n "Opcao invalida, cancelando restauracao."
-echo ""
-exit 1
-esac
+# chmod u + x /etc/rc.d/rc.local
+# systemctl start rc-local
