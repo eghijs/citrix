@@ -2,6 +2,10 @@
 # 
 # Criado por: Erik P. GHijs
 # Data: 19/11/2017
+# Descricao: Este script tem a finalidade de ativar o auto-start das vm´s no Xenserver 7.2.
+#
+# Ativando power-on das vm´s.
+#
 for UUID in $(xe vm-list power-state=running is-control-domain=false | grep uuid | cut -d: -f2- | tr -d \ )
   do
     NHOST=$(xe vm-param-list uuid=$UUID | grep -i name-label | cut -d: -f2- | tr -d \ )
@@ -9,6 +13,8 @@ for UUID in $(xe vm-list power-state=running is-control-domain=false | grep uuid
     echo "Ativando Power-ON das VM´s listado:"
     echo "$NHOST"
 done
+#
+# Modificando o arquivo rc.local para iniciar script auto-start.
 #
 for UUID in $(xe xe appliance-list | grep uuid | cut -d: -f2- | tr -d \ )
   do
