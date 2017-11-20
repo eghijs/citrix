@@ -75,8 +75,35 @@ chmod u+x rc.local
 echo -n "Permissao alterada no rc.local (OK)."
 echo -n ""
 echo -n "Verificando o status do serviço rc-local."
-echo -n ""
 systemctl status rc-local
-pausa
-# 
-# systemctl start rc-local
+echo -n ""
+echo -n "Gostaria de ativar o rc.local, Continue? [Y/N]"
+read YN
+case "$YN" in
+Y)
+echo ""
+echo -n "Servico rc.local ativado..."
+systemctl start rc-local
+
+;;
+y)
+echo ""
+echo -n "Servico rc.local ativado..."
+systemctl start rc-local
+
+;;
+N)
+echo -n "Cancelado ativacao do servico rc.local..."
+echo " "
+exit 1
+;;
+n)
+echo -n "Cancelado ativacao do servico rc.local..."
+echo " "
+exit 1
+;;
+*)
+echo -n "Opcao invalida, cancelando."
+echo ""
+exit 1
+esac
