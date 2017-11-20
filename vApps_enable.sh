@@ -11,6 +11,7 @@
 #       APCUPSD (http://www.apcupsd.com).
 #
 # OS: Xenserver 7.2
+# Status: Teste
 #
 # Parametros de configuração
 NAMEFILE=Start_vApps
