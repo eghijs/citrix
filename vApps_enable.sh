@@ -7,7 +7,6 @@
 # Parametros de configuração
 NAMEFILE=Start_vApps
 
-
 # Criação da estrutura do script
 cd /etc/init.d
 touch $NAMEFILE
