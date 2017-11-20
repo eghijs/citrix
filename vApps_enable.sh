@@ -5,11 +5,15 @@
 # Descricao: Este script tem a finalidade de ativar o auto-start das vm´s no Xenserver 7.2.
 #
 # Parametros de configuração
-cd /etc/init.d
-touch Start_vApps
-chmod a+x Start_vApps
+NAMEFILE=Start_vApps
 
-cat <<EOF > Start_vApps
+
+# Criação da estrutura do script
+cd /etc/init.d
+touch $NAMEFILE
+chmod a+x $NAMEFILE
+
+cat <<EOF > $NAMEFILE
 #!/bin/bash
 # AutoStart XenServer vApps with the tag autostart in their description
 # Script originally created by Raido Consultants - http://www.raido.be
@@ -42,6 +46,37 @@ do
     fi
 done
 EOF
+echo -n "Script $NAMEFILE criado."
+#
+# Modificando o rc.local
+cd /etc/rc.d
+cat <<EOF > rc.local
+#!/bin/bash
+# THIS FILE IS ADDED FOR COMPATIBILITY PURPOSES
+#
+# It is highly advisable to create own systemd services or udev rules
+# to run scripts during boot instead of using this file.
+#
+# In contrast to previous versions due to parallel execution during boot
+# this script will NOT be run after all other services.
+#
+# Please note that you must run 'chmod +x /etc/rc.d/rc.local' to ensure
+# that this script will be executed during boot.
 
-# chmod u + x /etc/rc.d/rc.local
+touch /var/lock/subsys/local
+
+# Script para iniciar autostart "vApps" 
+sleep 60
+/etc/init.d/Start_vApps
+
+EOF
+#
+chmod u+x rc.local
+echo -n "Permissao alterada no rc.local (OK)."
+echo -n ""
+echo -n "Verificando o status do serviço rc-local."
+echo -n ""
+systemctl status rc-local
+pausa
+# 
 # systemctl start rc-local
