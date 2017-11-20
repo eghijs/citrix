@@ -2,7 +2,15 @@
 # 
 # Criado por: Erik P. GHijs
 # Data: 19/11/2017
-# Descricao: Este script tem a finalidade de ativar o auto-start das vm´s no Xenserver 7.2.
+# Descricao: Script para instalar e ativar o servico “AutoStart”, no qual gerencia o ligamento   
+#            das vm´s no host XenServer quando houver uma falta de energia. O script esta
+#            agregado ao vApps.
+#
+# Obs.: Este script vai precisar de um gerenciador de no-break, no meu caso, utilizo Smart-UPS 3000 RM XL da APC, 
+#       com um cartão UPS Network Management Card 2 que esta conectado ao meu servidor e sendo gerenciado pelo 
+#       APCUPSD (http://www.apcupsd.com).
+#
+# OS: Xenserver 7.2
 #
 # Parametros de configuração
 NAMEFILE=Start_vApps
