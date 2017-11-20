@@ -2,7 +2,7 @@
 # 
 # Criado por: Erik P. GHijs
 # Data: 19/11/2017
-# Descricao: Script para instalar e ativar o servico “AutoStart”, no qual gerencia o ligamento   
+# Descricao: Script para instalar e ativar do servico “AutoStart”, no qual gerencia o ligamento   
 #            das vm´s no host XenServer quando houver uma falta de energia. O script esta
 #            agregado ao vApps.
 #
